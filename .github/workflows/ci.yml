@@ -19,6 +19,7 @@ jobs:
       SENPAI_DB_PASSWORD: ""
       SENPAI_DB_HOST: postgres
       SENPAI_DB_PORT: 5432
+      SENPAI_DB_TEST_PORT: 5432
       SENPAI_DB_NAME: senpai_db_test
       SENPAI_TEST_WEB_PORT: 4001
     services:
@@ -47,7 +48,7 @@ jobs:
           otp-version: '27'      
 
 
-#gemini said thats how they handle caching in elixir
+#gemini said thats how they handle caching in elixir CI 
       - name: Restore dependencies cache
         uses: actions/cache@v4
         id: deps-cache
