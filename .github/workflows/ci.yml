@@ -18,7 +18,6 @@ jobs:
       SENPAI_DB_USER: postgres
       SENPAI_DB_PASSWORD: ""
       SENPAI_DB_HOST: postgres
-      SENPAI_DB_PORT: 5432
       SENPAI_DB_TEST_PORT: 5432
       SENPAI_DB_NAME: senpai_db_test
       SENPAI_TEST_WEB_PORT: 4001
@@ -64,11 +63,25 @@ jobs:
         if: steps.deps-cache.outputs.cache-hit != 'true'
         run: mix deps.get
 
+      - name: Debug DNS for postgres (before compile)
+        run: |
+          echo "Attempting to resolve postgres..."
+          nslookup postgres
+          echo "Attempting to ping postgres..."
+          ping -c 3 postgres
+
       - name: Check formatting
         run: mix format --check-formatted
 
       - name: Compile with warnings as errors
         run: mix compile --warnings-as-errors
 
+      - name: Debug DNS for postgres (before test)
+        run: |
+          echo "Attempting to resolve postgres..."
+          nslookup postgres
+          echo "Attempting to ping postgres..."
+          ping -c 3 postgres
+
       - name: Run tests
-        run: mix test 
+        run: mix test
