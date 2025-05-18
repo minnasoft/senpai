@@ -10,7 +10,8 @@ defmodule Senpai.Application do
     children = [
       Senpai.Repo,
       {DNSCluster, query: Application.get_env(:senpai, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: Senpai.PubSub}
+      {Phoenix.PubSub, name: Senpai.PubSub},
+      {Oban, Application.fetch_env!(:senpai, Oban)}
       # Start a worker by calling: Senpai.Worker.start_link(arg)
       # {Senpai.Worker, arg}
     ]

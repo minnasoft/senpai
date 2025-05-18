@@ -26,6 +26,12 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Configures Oban (background jobs)
+config :senpai, Oban,
+  engine: Oban.Engines.Basic,
+  queues: [default: 10],
+  repo: Senpai.Repo
+
 # Configure Mix tasks and generators
 config :senpai,
   ecto_repos: [Senpai.Repo]

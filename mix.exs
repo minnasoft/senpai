@@ -39,7 +39,9 @@ defmodule Senpai.Umbrella.MixProject do
       # mix dialyzer --plt then mix dialyzer
       {:dialyxir, "~> 1.3", only: [:dev], runtime: false},
       {:excoveralls, "~> 0.18", only: [:dev], runtime: false},
-      {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false}
+      {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
+      {:sobelow, "~> 0.13", only: [:dev, :test], runtime: false},
+      {:mimic, "~> 1.10", only: :test}
     ]
   end
 
