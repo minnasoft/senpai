@@ -6,10 +6,11 @@ import Config
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :senpai, Senpai.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "senpai_test#{System.get_env("MIX_TEST_PARTITION")}",
+  username: System.fetch_env!("SENPAI_DB_USER"),
+  password: System.fetch_env!("SENPAI_DB_PASSWORD"),
+  hostname: System.fetch_env!("SENPAI_DB_HOST"),
+  database: "senpai_test",
+  port: System.fetch_env!("SENPAI_DB_TEST_PORT"),
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: System.schedulers_online() * 2
 
