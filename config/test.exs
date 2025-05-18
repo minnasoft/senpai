@@ -1,5 +1,18 @@
 import Config
 
+# Print only warnings and errors during test
+config :logger, level: :warning
+
+# Initialize plugs at runtime for faster test compilation
+config :phoenix, :plug_init_mode, :runtime
+
+# Enable helpful, but potentially expensive runtime checks
+config :phoenix_live_view,
+  enable_expensive_runtime_checks: true
+
+# Don't start Oban from running jobs/plugins during tests.
+config :senpai, Oban, testing: :manual
+
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used
@@ -10,23 +23,13 @@ config :senpai, Senpai.Repo,
   password: System.fetch_env!("SENPAI_DB_PASSWORD"),
   hostname: System.fetch_env!("SENPAI_DB_HOST"),
   database: "senpai_test",
-  port: System.fetch_env!("SENPAI_DB_TEST_PORT"),
+  port: System.fetch_env!("SENPAI_DB_PORT"),
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: System.schedulers_online() * 2
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
 config :senpai_web, SenpaiWeb.Endpoint,
-  http: [ip: {127, 0, 0, 1}, port: 4002],
+  http: [ip: {127, 0, 0, 1}, port: System.fetch_env!("SENPAI_TEST_WEB_PORT")],
   secret_key_base: "+m+kvC+gQVZsZgjEWsf8TrgqTb8RrvmXhJaQJWKBzidqKjFg6Ej5opZzf4KhkKtn",
   server: false
-
-# Print only warnings and errors during test
-config :logger, level: :warning
-
-# Initialize plugs at runtime for faster test compilation
-config :phoenix, :plug_init_mode, :runtime
-
-# Enable helpful, but potentially expensive runtime checks
-config :phoenix_live_view,
-  enable_expensive_runtime_checks: true

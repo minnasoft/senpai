@@ -118,5 +118,5 @@ $RECYCLE.BIN/
 
 # direnv
 .direnv/
-
+.vscode
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Linux,macOS,Erlang,Elixir,Phoenix,Windows
