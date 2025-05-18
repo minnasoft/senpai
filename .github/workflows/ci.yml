@@ -53,7 +53,7 @@ jobs:
         uses: erlef/setup-elixir@v1
         with:
           version-file: .tool-versions #mandatory parrot 🦜
- 
+          version-type: strict
 
 
 #gemini said thats how they handle caching in elixir CI 
