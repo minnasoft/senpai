@@ -22,24 +22,20 @@ jobs:
       SENPAI_DB_TEST_PORT: 5432
       SENPAI_DB_NAME: senpai_db_test
       SENPAI_TEST_WEB_PORT: 4001
-    services:
-      postgres:
-        image: postgres:17-alpine 
-        env:
-          POSTGRES_HOST_AUTH_METHOD: trust # Easiest for CI, no password needed
-          POSTGRES_DB: senpai_db_test 
-          POSTGRES_USER: postgres 
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+   
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Start docker compose
+        run: docker-compose up -d
+
+      - name: Wait for PostgreSQL to be healthy
+        run: |
+          echo "Waiting for PostgreSQL to be ready..."
+          timeout 60s bash -c 'until docker exec postgres_test pg_isready -U postgres -d senpai_db_test -q; do sleep 2; done'
+          echo "PostgreSQL is ready."
 
       - name: Set up Elixir
         uses: erlef/setup-elixir@v1
@@ -72,3 +68,7 @@ jobs:
 
       - name: Run tests
         run: mix test
+
+      - name: Stop services
+        if: always() 
+        run: docker-compose -f docker-compose.test.yml down
