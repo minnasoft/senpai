@@ -30,7 +30,7 @@ defmodule Senpai.Umbrella.MixProject do
     [
       # Required to run "mix format" on ~H/.heex files from the umbrella root
       # TODO bump on release to {:phoenix_live_view, ">= 0.0.0"},
-      {:phoenix_live_view, "~> 1.0.0-rc.1", override: true},
+      {:phoenix_live_view, ">= 0.0.0", override: true},
       {:excellent_migrations, "~> 0.1", only: [:dev, :test], runtime: false},
       # mix credo
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
@@ -54,7 +54,6 @@ defmodule Senpai.Umbrella.MixProject do
   # and cannot be accessed from applications inside the apps/ folder.
   defp aliases do
     [
-      # run `mix setup` in all child apps
       setup: ["cmd mix setup"]
     ]
   end

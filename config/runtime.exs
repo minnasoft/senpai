@@ -7,6 +7,8 @@ import Config
 # any compile-time configuration in here, as it won't be applied.
 # The block below contains prod specific runtime configuration.
 if config_env() == :prod do
+  import Config
+
   database_url =
     System.get_env("DATABASE_URL") ||
       raise """
@@ -15,14 +17,6 @@ if config_env() == :prod do
       """
 
   maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
-
-  config :senpai, Senpai.Repo,
-    # ssl: true,
-    url: database_url,
-    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-    socket_options: maybe_ipv6
-
-  import Config
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
@@ -35,6 +29,14 @@ if config_env() == :prod do
       environment variable SECRET_KEY_BASE is missing.
       You can generate one by calling: mix phx.gen.secret
       """
+
+  config :senpai, Senpai.Repo,
+    # ssl: true,
+    url: database_url,
+    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+    socket_options: maybe_ipv6
+
+  config :senpai, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
   config :senpai_web, SenpaiWeb.Endpoint,
     http: [
@@ -86,6 +88,4 @@ if config_env() == :prod do
   #       force_ssl: [hsts: true]
   #
   # Check `Plug.SSL` for all available options in `force_ssl`.
-
-  config :senpai, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 end

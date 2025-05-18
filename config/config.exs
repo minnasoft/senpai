@@ -9,13 +9,26 @@
 # move said applications out of the umbrella.
 import Config
 
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.17.11",
+  senpai_web: [
+    args: ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../apps/senpai_web/assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+# Configures Elixir's Logger
+config :logger, :console,
+  format: "$time $metadata[$level] $message\n",
+  metadata: [:request_id]
+
+# Use Jason for JSON parsing in Phoenix
+config :phoenix, :json_library, Jason
+
 # Configure Mix tasks and generators
 config :senpai,
   ecto_repos: [Senpai.Repo]
-
-config :senpai_web,
-  ecto_repos: [Senpai.Repo],
-  generators: [context_app: :senpai, binary_id: true]
 
 # Configures the endpoint
 config :senpai_web, SenpaiWeb.Endpoint,
@@ -28,15 +41,9 @@ config :senpai_web, SenpaiWeb.Endpoint,
   pubsub_server: Senpai.PubSub,
   live_view: [signing_salt: "tHKDE727"]
 
-# Configure esbuild (the version is required)
-config :esbuild,
-  version: "0.17.11",
-  senpai_web: [
-    args:
-      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
-    cd: Path.expand("../apps/senpai_web/assets", __DIR__),
-    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
-  ]
+config :senpai_web,
+  ecto_repos: [Senpai.Repo],
+  generators: [context_app: :senpai, binary_id: true]
 
 # Configure tailwind (the version is required)
 config :tailwind,
@@ -47,17 +54,10 @@ config :tailwind,
       --input=css/app.css
       --output=../priv/static/assets/app.css
     ),
+
+    # Import environment specific config. This must remain at the bottom
+    # of this file so it overrides the configuration defined above.
     cd: Path.expand("../apps/senpai_web/assets", __DIR__)
   ]
 
-# Configures Elixir's Logger
-config :logger, :console,
-  format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
-
-# Use Jason for JSON parsing in Phoenix
-config :phoenix, :json_library, Jason
-
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
