@@ -49,17 +49,12 @@ jobs:
           timeout 60s bash -c 'until docker exec postgres pg_isready -U postgres -d senpai_db_test -q; do sleep 2; done'
           echo "PostgreSQL is ready."
 
-      - name: Debug - List files in current directory
-        run: ls -la
-
-      - name: Debug - List files in GitHub workspace root
-        run: ls -la ${{ github.workspace }}
-
       - name: Set up Elixir
         uses: erlef/setup-elixir@v1
         with:
-          version-file: .tool-versions
-          version-type: strict
+          elixir-version: '1.18.3' 
+          otp-version: '27'
+
 
 
 #gemini said thats how they handle caching in elixir CI 
