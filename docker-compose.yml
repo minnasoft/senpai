@@ -1,0 +1,16 @@
+name: "minnasoft-senpai"
+services:
+  db:
+    container_name: postgres
+    image: postgres:17-alpine
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - ${SENPAI_DB_PORT:-5432}:5432
+    environment:
+      - POSTGRES_USER=${SENPAI_DB_USER}
+      - POSTGRES_PASSWORD=${SENPAI_DB_PASSWORD}
+      - POSTGRES_DB=${SENPAI_DB_NAME}
+
+volumes:
+  db-data:
