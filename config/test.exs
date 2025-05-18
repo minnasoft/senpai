@@ -10,7 +10,7 @@ config :senpai, Senpai.Repo,
   password: System.fetch_env!("SENPAI_DB_PASSWORD"),
   hostname: System.fetch_env!("SENPAI_DB_HOST"),
   database: "senpai_test",
-  port: System.fetch_env!("SENPAI_DB_PORT"),
+  port: System.fetch_env!("SENPAI_DB_TEST_PORT"),
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: System.schedulers_online() * 2
 
