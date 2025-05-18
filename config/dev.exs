@@ -2,10 +2,11 @@ import Config
 
 # Configure your database
 config :senpai, Senpai.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "senpai_dev",
+  username: System.get_env("SENPAI_DB_USER"),
+  password: System.get_env("SENPAI_DB_PASSWORD"),
+  hostname: System.get_env("SENPAI_DB_HOST"),
+  database: System.get_env("SENPAI_DB_NAME"),
+  port: System.get_env("SENPAI_DB_PORT"),
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -19,11 +20,11 @@ config :senpai, Senpai.Repo,
 config :senpai_web, SenpaiWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {127, 0, 0, 1}, port: 4000],
+  http: [ip: {127, 0, 0, 1}, port: System.get_env("SENPAI_WEB_PORT")],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "FVqvuUnHB5Pl6LX8Jmr+7xvZCY9QTLEyFHIsDTfbNJmdlbovdGjkZWd9ydRa9FXD",
+  secret_key_base: System.get_env("SENPAI_WEB_SECRET_KEY"),
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:senpai_web, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:senpai_web, ~w(--watch)]}
