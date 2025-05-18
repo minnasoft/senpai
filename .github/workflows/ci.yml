@@ -39,6 +39,10 @@ jobs:
       - name: Start docker compose
         run: docker-compose up -d
 
+      - name: Display Docker Compose logs for db service
+        if: always()
+        run: docker-compose logs db
+
       - name: Wait for PostgreSQL to be healthy
         run: |
           echo "Waiting for PostgreSQL to be ready..."
