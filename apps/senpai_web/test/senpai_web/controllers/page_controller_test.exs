@@ -1,5 +1,5 @@
 defmodule SenpaiWeb.PageControllerTest do
-  use SenpaiWeb.ConnCase
+  use SenpaiWeb.ConnCase, async: true
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")

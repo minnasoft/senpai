@@ -156,9 +156,8 @@
           #
           {Credo.Check.Readability.SingleFunctionToBlockPipe, []},
           {Credo.Check.Readability.SinglePipe, []},
-          {Credo.Check.Readability.Specs, []},
+          {Credo.Check.Readability.Specs, [files: %{excluded: ["apps/*/test/**/*.ex", "apps/senpai_web/**/*.ex"]}]},
           {Credo.Check.Readability.StrictModuleLayout, []},
-          {Credo.Check.Refactor.ModuleDependencies, []},
           {Credo.Check.Refactor.NegatedIsNil, []},
           {Credo.Check.Refactor.PassAsyncInTestCases, []},
           {Credo.Check.Refactor.PipeChainStart, []},
