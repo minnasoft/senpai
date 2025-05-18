@@ -13,6 +13,13 @@ jobs:
   build_and_test:
     name: Build and Test
     runs-on: ubuntu-latest #kinda standard
+    env:
+      MIX_ENV: test
+      SENPAI_DB_USER: postgres
+      SENPAI_DB_PASSWORD: ""
+      SENPAI_DB_HOST: postgres
+      SENPAI_DB_PORT: 5432
+      SENPAI_DB_NAME: senpai_db_test
     services:
       postgres:
         image: postgres:17-alpine 
@@ -62,11 +69,4 @@ jobs:
         run: mix compile --warnings-as-errors
 
       - name: Run tests
-        env:
-          MIX_ENV: test #idk if we should use .env or these env values but this feels cleaner
-          SENPAI_DB_USER: postgres
-          SENPAI_DB_PASSWORD: ""
-          SENPAI_DB_HOST: localhost
-          SENPAI_DB_PORT: 5432
-          SENPAI_DB_NAME: senpai_db_test
         run: mix test 
