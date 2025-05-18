@@ -1,0 +1,72 @@
+name: Elixir CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build_and_test:
+    name: Build and Test
+    runs-on: ubuntu-latest #kinda standard
+    services:
+      postgres:
+        image: postgres:17-alpine 
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust # Easiest for CI, no password needed
+          POSTGRES_DB: senpai_db_test 
+          POSTGRES_USER: postgres 
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Elixir
+        uses: erlef/setup-elixir@v1
+        with:
+          elixir-version: '1.18.3' # copied from the elixir -v command 🦜
+          otp-version: '27'      
+
+
+#gemini said thats how they handle caching in elixir
+      - name: Restore dependencies cache
+        uses: actions/cache@v4
+        id: deps-cache
+        with:
+          path: |
+            deps
+            _build
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-
+
+      - name: Install dependencies
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: mix deps.get
+
+      - name: Check formatting
+        run: mix format --check-formatted
+
+      - name: Compile with warnings as errors
+        run: mix compile --warnings-as-errors
+
+      - name: Run tests
+        env:
+          MIX_ENV: test #idk if we should use .env or these env values but this feels cleaner
+          SENPAI_DB_USER: postgres
+          SENPAI_DB_PASSWORD: ""
+          SENPAI_DB_HOST: localhost
+          SENPAI_DB_PORT: 5432
+          SENPAI_DB_NAME: senpai_db_test
+        run: mix test 
