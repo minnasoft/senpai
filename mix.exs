@@ -56,7 +56,14 @@ defmodule Senpai.Umbrella.MixProject do
   # and cannot be accessed from applications inside the apps/ folder.
   defp aliases do
     [
-      setup: ["cmd mix setup"]
+      setup: ["cmd mix setup"],
+      lint: [
+        "compile --force --warnings-as-errors",
+        "format --check-formatted",
+        "credo --strict",
+        "sobelow --root apps/senpai_web",
+        "dialyzer"
+      ]
     ]
   end
 end
