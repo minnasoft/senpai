@@ -116,4 +116,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# direnv
+.direnv/
+
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Linux,macOS,Erlang,Elixir,Phoenix,Windows
