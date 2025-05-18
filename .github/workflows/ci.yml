@@ -16,7 +16,7 @@ jobs:
     env:
       MIX_ENV: test
       SENPAI_DB_USER: postgres
-      SENPAI_DB_PASSWORD: ""
+      SENPAI_DB_PASSWORD: xPof4cWJlfomnWFFRtvKSFf7ZpZNmoR7
       SENPAI_DB_HOST: localhost
       SENPAI_DB_PORT: 5432
       SENPAI_DB_TEST_PORT: 5432
