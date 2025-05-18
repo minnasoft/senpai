@@ -7,7 +7,10 @@ defmodule Senpai.Umbrella.MixProject do
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      aliases: aliases()
+      aliases: aliases(),
+      preferred_cli_env: [
+        "test.watch": :test
+      ]
     ]
   end
 
@@ -27,7 +30,16 @@ defmodule Senpai.Umbrella.MixProject do
     [
       # Required to run "mix format" on ~H/.heex files from the umbrella root
       # TODO bump on release to {:phoenix_live_view, ">= 0.0.0"},
-      {:phoenix_live_view, "~> 1.0.0-rc.1", override: true}
+      {:phoenix_live_view, "~> 1.0.0-rc.1", override: true},
+      {:excellent_migrations, "~> 0.1", only: [:dev, :test], runtime: false},
+      # mix credo
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      # mix format
+      {:styler, "~> 1.4", only: [:dev, :test], runtime: false},
+      # mix dialyzer --plt then mix dialyzer
+      {:dialyxir, "~> 1.3", only: [:dev], runtime: false},
+      {:excoveralls, "~> 0.18", only: [:dev], runtime: false},
+      {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false}
     ]
   end
 
