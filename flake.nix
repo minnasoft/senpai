@@ -15,6 +15,8 @@
             buildInputs = [
               # API Deps ------------------------------------
               elixir_1_18
+              docker
+              docker-compose
 
               # Web Deps ------------------------------------
               nodePackages.prettier nodejs_20
