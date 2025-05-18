@@ -590,7 +590,7 @@ defmodule SenpaiWeb.CoreComponents do
   attr :name, :string, required: true
   attr :class, :string, default: nil
 
-  def icon(%{name: "hero-" <> _} = assigns) do
+  def icon(%{name: "hero-" <> _icon} = assigns) do
     ~H"""
     <span class={[@name, @class]} />
     """
@@ -659,7 +659,7 @@ defmodule SenpaiWeb.CoreComponents do
     # end
 
     Enum.reduce(opts, msg, fn {key, value}, acc ->
-      String.replace(acc, "%{#{key}}", fn _ -> to_string(value) end)
+      String.replace(acc, "%{#{key}}", fn _rep -> to_string(value) end)
     end)
   end
 
