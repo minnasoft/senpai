@@ -149,7 +149,23 @@
           {Credo.Check.Warning.UnusedRegexOperation, []},
           {Credo.Check.Warning.UnusedStringOperation, []},
           {Credo.Check.Warning.UnusedTupleOperation, []},
-          {Credo.Check.Warning.WrongTestFileExtension, []}
+          {Credo.Check.Warning.WrongTestFileExtension, []},
+          #
+          # Controversial and experimental checks (opt-in, just move the check to `:enabled`
+          #   and be sure to use `mix credo --strict` to see low priority checks)
+          #
+          {Credo.Check.Readability.SingleFunctionToBlockPipe, []},
+          {Credo.Check.Readability.SinglePipe, []},
+          {Credo.Check.Readability.Specs, []},
+          {Credo.Check.Readability.StrictModuleLayout, []},
+          {Credo.Check.Refactor.ModuleDependencies, []},
+          {Credo.Check.Refactor.NegatedIsNil, []},
+          {Credo.Check.Refactor.PassAsyncInTestCases, []},
+          {Credo.Check.Refactor.PipeChainStart, []},
+          {Credo.Check.Consistency.MultiAliasImportRequireUse, []},
+          {Credo.Check.Consistency.UnusedVariableNames, []},
+          {Credo.Check.Design.DuplicatedCode, []},
+          {Credo.Check.Design.SkipTestWithoutComment, []}
         ],
         disabled: [
           #
@@ -160,10 +176,6 @@
           # Controversial and experimental checks (opt-in, just move the check to `:enabled`
           #   and be sure to use `mix credo --strict` to see low priority checks)
           #
-          {Credo.Check.Consistency.MultiAliasImportRequireUse, []},
-          {Credo.Check.Consistency.UnusedVariableNames, []},
-          {Credo.Check.Design.DuplicatedCode, []},
-          {Credo.Check.Design.SkipTestWithoutComment, []},
           {Credo.Check.Readability.AliasAs, []},
           {Credo.Check.Readability.BlockPipe, []},
           {Credo.Check.Readability.ImplTrue, []},
@@ -172,10 +184,6 @@
           {Credo.Check.Readability.OneArityFunctionInPipe, []},
           {Credo.Check.Readability.OnePipePerLine, []},
           {Credo.Check.Readability.SeparateAliasRequire, []},
-          {Credo.Check.Readability.SingleFunctionToBlockPipe, []},
-          {Credo.Check.Readability.SinglePipe, []},
-          {Credo.Check.Readability.Specs, []},
-          {Credo.Check.Readability.StrictModuleLayout, []},
           {Credo.Check.Readability.WithCustomTaggedTuple, []},
           {Credo.Check.Refactor.ABCSize, []},
           {Credo.Check.Refactor.AppendSingleItem, []},
@@ -183,10 +191,6 @@
           {Credo.Check.Refactor.FilterReject, []},
           {Credo.Check.Refactor.IoPuts, []},
           {Credo.Check.Refactor.MapMap, []},
-          {Credo.Check.Refactor.ModuleDependencies, []},
-          {Credo.Check.Refactor.NegatedIsNil, []},
-          {Credo.Check.Refactor.PassAsyncInTestCases, []},
-          {Credo.Check.Refactor.PipeChainStart, []},
           {Credo.Check.Refactor.RejectFilter, []},
           {Credo.Check.Refactor.VariableRebinding, []},
           {Credo.Check.Warning.LazyLogging, []},
